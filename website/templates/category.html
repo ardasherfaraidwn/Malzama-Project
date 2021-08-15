@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Add Subject
+{% endblock %}
+
+{% block path %}
+<li class="nav-item">
+  <a class="nav-link" href="/">Home</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="/malzama">Create Malzama</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="/info">Info</a>
+</li>
+{% endblock %}
+
+{% block content %}
+<h6 class="text-secondary text-center">Create Subject</h6>
+<form method="POST">
+    <div class="row justify-content-center mt-4 ms-2 me-2">
+        <label for="add_type" class="form-label">Subject</label> 
+        <input type="text" class="form-control" required name="add_type" id="add_type" placeholder="Enter New Subject">
+    </div>
+
+    <div class="row justify-content-center  d-block text-center">
+        <button type="submit" class="btn btn-success col-5 mt-5">Add</button>
+    </div>
+</form>
+{% endblock %}
+
+{% block messg %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+      {% for category,message in messages %}
+          {% if category == "success" %}
+              <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                  {{message}}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+          {% else %}
+              <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                  {{message}}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+          {% endif %}
+      {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<table class="table mt-5">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Subjects</th>
+      <th scope="col">Delete</th>
+      <th scope="col">Edit</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for x in data %}
+      <tr>
+      <th scope="row">{{x.id}}</th>
+      <td>{{x.typee}}</td>
+      <td><button class="del-btn"><a class="text-decoration-none" href="/cetegores/delete/{{x.id}}">❌</a></button></td>
+      <td><button class="del-btn"><a class="text-decoration-none" href="/cetegores/update/{{x.id}}">➕</a></button></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+

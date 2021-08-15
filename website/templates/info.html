@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Info
+{% endblock %}
+
+{% block path %}
+<li class="nav-item">
+  <a class="nav-link" href="/">Home</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="/malzama">Create Malzama</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/cetegores">Create Subject</a>
+</li>
+{% endblock %}
+
+{% block content %}
+<h6 class="text-secondary text-center">Create Subject</h6>
+<form method="POST">
+    <div class="row justify-content-center mt-4 ms-2 me-2">
+        <div class="input-group">
+            <form method="POST">
+            <select class="form-select" id="inputGroupSelect04" name="st_search">
+              {% for st in studentes%}
+                <option value="{{st.id}}">{{st.st_name}}</option>
+              {% endfor %}
+            </select>
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </form>
+          </div>
+    </div>
+</form>
+{% endblock %}
+
+{% block messg %}
+<table class="table table-striped mt-5">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Malzama</th>
+      <th scope="col">DateTime</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% if data %}
+          {% for info,malzama,student in data %}
+              <tr>
+              <!-- <th scope="row">{{student.id}}</th> -->
+              <th scope="row">{{ loop.index0 }}</th>
+              <td>{{student.st_name}}</td>
+              <td>{{malzama.mz_name}}</td>
+              <td>{{info.date}}</td>
+              </tr>
+          {% endfor %}
+     {% endif %}
+  </tbody>
+</table>
+{% endblock %}
+

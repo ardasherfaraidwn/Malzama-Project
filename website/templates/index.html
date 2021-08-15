@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block path %}
+<li class="nav-item">
+    <a class="nav-link" href="malzama">Create Malzama</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/cetegores">Create Subject</a>
+  </li>
+  <li class="nav-item">
+      <a class="nav-link" href="/info">Info</a>
+  </li>
+{% endblock %}
+
+{% block content %}
+<h6 class="text-secondary text-center">Add Malzama to Students</h6>
+<form method="POST">
+    <div class="row justify-content-center mt-4">
+        <label for="st" class="form-label">Select Students</label>
+        <select class="sl" multiple="multiple" name="st" required>
+            {% for student in students_name %}
+            <option value="{{student.id}}">{{student.id}}- {{student.st_name}}</option>
+            {% endfor %}
+            </select>
+    </div>
+
+    <div class="row justify-content-center mt-5">
+        <label for="st2_malzama" class="form-label">Select Malzama</label>
+        <select class="form-select" aria-label="Default select example" name="st2_malzama" required>
+            {% for malz in malzama %}
+                <option value="{{malz.id}}">{{malz.mz_name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="row justify-content-center  d-block text-center">
+        <button type="submit" class="btn btn-success col-5 mt-5">Add</button>
+    </div>
+</form>
+{% endblock %}
+
+{% block messg %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category,message in messages %}
+            {% if category == "success" %}
+                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                    {{message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% else %}
+                <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                    {{message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+{% endblock %}
+
+{% block selectScript %}
+<script>
+    // In your Javascript (external .js resource or <script> tag)
+    $(document).ready(function() {
+        $('.sl').select2({
+            placeholder: "Select a Name",
+            allowClear: true
+        });
+    });
+</script>
+{% endblock %}

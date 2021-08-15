@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Malzama
+{% endblock %}
+
+{% block path %}
+<li class="nav-item">
+  <a class="nav-link" href="/">Home</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="/cetegores">Create Subject</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="/info">Info</a>
+</li>
+{% endblock %}
+
+{% block content %}
+<h6 class="text-secondary text-center">Create Malzama</h6>
+<form method="POST">
+    <div class="row justify-content-center mt-4 ms-2 me-2">
+      <label for="add_malzama" class="form-label">Malzama Name</label>
+        <input type="text" class="form-control" required name="add_malzama" id="add_malzama" placeholder="Enter New Malzama">
+    </div>
+
+    <div class="row justify-content-center mt-4 ms-2 me-2">
+      <label for="subject" class="form-label">Select Subject</label>
+      <select class="form-select" aria-label="Default select example" name="subject">
+        {% for x in typess %}
+        <option value="{{x.id}}">{{x.typee}}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="row justify-content-center  d-block text-center">
+        <button type="submit" class="btn btn-success col-5 mt-5">Add</button>
+    </div>
+</form>
+{% endblock %}
+
+{% block messg %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category,message in messages %}
+            {% if category == "success" %}
+                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                    {{message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% else %}
+                <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                    {{message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<table class="table mt-5">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">MalzamaName</th>
+      <th scope="col">Subject</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for malzama,typees in malzamas %}
+      <tr>
+      <th scope="row">{{malzama.id}}</th>
+      <td>{{malzama.mz_name}}</td>
+      <td>{{typees.typee}}</td>
+      <td><button class="del-btn"><a class="text-decoration-none" href="/malzama/delete/{{malzama.id}}">❌</a></button></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+
